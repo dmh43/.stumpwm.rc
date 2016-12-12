@@ -5,3 +5,4 @@
 
 !.stumpwmrc
 !.gitignore
+!.stumpwm.d/config/*

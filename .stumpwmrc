@@ -5,6 +5,7 @@
 (ql:quickload :swank)
 (load "stumplib/stumplib.lisp")
 (load "stumplib/which-key.lisp")
+(load ".stumpwm.d/config/audio.lisp")
 
 (setf *max-last-message-size* 10000)
 
@@ -96,9 +97,8 @@
   (declare (ignore key))
   (unless (eq *top-map* *resize-map*)
     (let ((*message-window-gravity* :bottom-right)
-          (maps (dereference-kmaps
-                 (get-keymaps-at-key-seq (dereference-kmaps (top-maps))
-                                         (reverse key-seq)))))
+          (maps (get-keymaps-at-key-seq (dereference-kmaps (top-maps))
+                                        (reverse key-seq))))
       (if (remove-if-not 'kmap-p maps)
           (apply 'display-bindings-for-keymaps (reverse (cdr key-seq)) maps)
           (message "Key sequence: ~a" (print-key-seq (reverse key-seq)))))))
