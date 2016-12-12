@@ -4,39 +4,17 @@
 (in-package :stumpwm)
 (ql:quickload :swank)
 (load "stumplib/stumplib.lisp")
+(load "stumplib/which-key.lisp")
 
 (setf *max-last-message-size* 10000)
 
 (setq *window-format* "%m%n%s%c - %10t")
-  ;; "This variable decides how the window list is formatted. It is a string
-;; with the following formatting options:
-
-;; @table @asis
-;; @item %n
-;; Substitutes the windows number translated via *window-number-map*, if there
-;; are more windows than *window-number-map* then will use the window-number.
-;; @item %s
-;; Substitute the window's status. * means current window, + means last
-;; window, and - means any other window.
-;; @item %t
-;; Substitute the window's name.
-;; @item %c
-;; Substitute the window's class.
-;; @item %i
-;; Substitute the window's resource ID.
-;; @item %m
-;; Draw a # if the window is marked.
-;; @end table
-
-;; Note, a prefix number can be used to crop the argument to a specified
-;; size. For instance, @samp{%20t} crops the window's title to 20
-;; characters."
 
 (toggle-mode-line (stumpwm:current-screen)
                   (stumpwm:current-head))
 
 (run-shell-command "copyq")
-(run-shell-command "xinput --set-prop --type=float "SynPS/2 Synaptics TouchPad" "Synaptics Coasting Speed" 0 0")
+(run-shell-command "xinput --set-prop --type=float \"SynPS/2 Synaptics TouchPad\" \"Synaptics Coasting Speed\" 0 0")
 
 (defcommand del-back-word () ()
   (send-meta-key (current-screen) (kbd "M-DEL")))
@@ -117,8 +95,13 @@
 (defun key-press-hook (key key-seq cmd)
   (declare (ignore key))
   (unless (eq *top-map* *resize-map*)
-    (let ((*message-window-gravity* :bottom-right))
-      (message "Key sequence: ~a" (print-key-seq (reverse key-seq))))))
+    (let ((*message-window-gravity* :bottom-right)
+          (maps (dereference-kmaps
+                 (get-keymaps-at-key-seq (dereference-kmaps (top-maps))
+                                         (reverse key-seq)))))
+      (if (remove-if-not 'kmap-p maps)
+          (apply 'display-bindings-for-keymaps (reverse (cdr key-seq)) maps)
+          (message "Key sequence: ~a" (print-key-seq (reverse key-seq)))))))
 
 (defmacro replace-hook (hook fn)
   `(remove-hook ,hook ,fn)
