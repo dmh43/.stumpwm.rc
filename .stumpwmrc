@@ -2,8 +2,10 @@
 ;;
 
 (in-package :stumpwm)
-(ql:quickload :swank)
+(load "~/.emacs.d/elpa/slime-20161109.640/swank-loader.lisp")
+(swank-loader:init)
 (load "stumplib/stumplib.lisp")
+(load "stumplib/copy-helper.lisp")
 (load ".stumpwm.d/config/audio.lisp")
 
 (setf *max-last-message-size* 10000)
@@ -15,6 +17,7 @@
 
 (run-shell-command "copyq")
 (run-shell-command "xinput --set-prop --type=float \"SynPS/2 Synaptics TouchPad\" \"Synaptics Coasting Speed\" 0 0")
+(which-key-mode)
 
 (defcommand del-back-word () ()
   (send-meta-key (current-screen) (kbd "M-DEL")))
@@ -81,6 +84,15 @@
 
 (def-non-emacs-key *top-map* (kbd "s-`") (get-shell-command "copyq toggle"))  ; TODO: This should work
 
+(defvar *copy-bindings*
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "u") "url-copy")
+    (define-key m (kbd "q") "in-quotes-copy")
+    (define-key m (kbd "C-M-c") "normal-copy")
+    m))
+
+(define-key *top-map* (kbd "C-M-c") *copy-bindings*)
+
 (defvar *eval-bindings*
   (let ((m (stumpwm:make-sparse-keymap)))
     (def-non-emacs-key m (kbd "C-r") (eval-line (get-x-selection))) ; TODO: have this use the command defined earlier
@@ -92,6 +104,7 @@
 
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
 (define-key *top-map* (kbd "s-SPC") (get-shell-command "synapse"))
+(define-key *root-map* (kbd "C-b") (get-shell-command "chromium"))
 (define-key *root-map* (kbd "C-m") "echo-last-messages")
 (define-key *root-map* (kbd "M") "select-last-messages")
 
