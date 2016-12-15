@@ -82,6 +82,9 @@
 (def-non-emacs-key *top-map* (kbd "s-n") (stumpwm::send-meta-key (current-screen) (kbd "C-n")))
 (def-non-emacs-key *top-map* (kbd "C-d") (stumpwm::send-meta-key (current-screen) (kbd "Delete")))
 
+(def-non-emacs-key *top-map* (kbd "M-b") (stumpwm::send-meta-key (current-screen) (kbd "C-Left")))
+(def-non-emacs-key *top-map* (kbd "M-f") (stumpwm::send-meta-key (current-screen) (kbd "C-Right")))
+
 (def-non-emacs-key *top-map* (kbd "s-`") (get-shell-command "copyq toggle"))  ; TODO: This should work
 
 (defvar *copy-bindings*
