@@ -6,147 +6,33 @@
 (swank-loader:init)
 (load "stumplib/stumplib.lisp")
 (load "stumplib/copy-helper.lisp")
+(load "stumplib/group-manipulation.lisp")
+(load "stumplib/eval-helper.lisp")
+(load "stumplib/browser-helper.lisp")
+
 (load ".stumpwm.d/config/audio.lisp")
+(load ".stumpwm.d/config/group.lisp")
+(load ".stumpwm.d/config/util.lisp")
+(load ".stumpwm.d/config/text.lisp")
+(load ".stumpwm.d/config/eval.lisp")
+(load ".stumpwm.d/config/debug.lisp")
 
 (setf *max-last-message-size* 10000)
 
 (setq *window-format* "%m%n%s%c - %10t")
 
-(toggle-mode-line (stumpwm:current-screen)
-                  (stumpwm:current-head))
+(toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
 
 (run-shell-command "copyq")
 (run-shell-command "xinput --set-prop --type=float \"SynPS/2 Synaptics TouchPad\" \"Synaptics Coasting Speed\" 0 0")
 (which-key-mode)
-
-(defcommand del-back-word () ()
-  (send-meta-key (current-screen) (kbd "M-DEL")))
-;;;;;; CAN I EVAL KEYBOARD MOTIONS IN A FUCKING ELISP INTERPRETER FROM ANYWHERE IN THE WM???
-
-(defcommand start-xephyr () ()
-  (run-shell-command ""))
-
-(defun swap-groups (group1 group2)
-  (rotatef (slot-value group1 'number) (slot-value group2 'number)))
-
-(defun move-group-forward (&optional (group (current-group)))
-  (swap-groups group (next-group group (sort-groups (current-screen)))))
-
-(defun move-group-backward (&optional (group (current-group)))
-  (swap-groups group (next-group group (reverse (sort-groups (current-screen))))))
-
-(define-stumpwm-command "gforward" ()
-  (move-group-forward)
-  (echo-groups (current-screen) *group-format*))
-
-(define-stumpwm-command "gbackward" ()
-  (move-group-backward)
-  (echo-groups (current-screen) *group-format*))
-
-(dotimes (i 13)
-  (unless (eq i 0) ; F0 is non-existant and will error.
-    (define-key *top-map* (kbd (format nil "M-F~a" i)) (format nil "gselect ~a" i))))
-
-(defcommand battery () ()
-  (run-shell-command "acpi -b | perl -ne 'print $1 if /Battery 0: (.+)/'" T))
-
-(defcommand eval-selected () () (eval-line (get-x-selection)))
-
-;; (setf *shell-program* "/usr/bin/zsh")
-
-;; Web jump (works for Google and Imdb)
-(defmacro make-web-jump (name prefix)
-  `(defcommand ,(intern name) (search) ((:rest ,(concatenate 'string name " search: ")))
-     (substitute #\+ #\Space search)
-     (run-shell-command (concatenate 'string ,prefix search))))
-
-(make-web-jump "google" "chromium http://www.google.fr/search?q=")
-
-(define-key *root-map* (kbd "b") "battery")
-
-(define-key *top-map* (kbd "M-]") "gnext")
-(define-key *top-map* (kbd "M-[") "gprev")
-
-(define-key *root-map* (kbd "M-s") "google")
-
-(def-non-emacs-key *top-map* (kbd "M->") (stumpwm::send-meta-key (current-screen) (kbd "End")))
-(def-non-emacs-key *top-map* (kbd "M-<") (stumpwm::send-meta-key (current-screen) (kbd "Home")))
-(def-non-emacs-key *top-map* (kbd "M-v") (stumpwm::send-meta-key (current-screen) (kbd "SunPageUp")))
-(def-non-emacs-key *top-map* (kbd "C-v") (stumpwm::send-meta-key (current-screen) (kbd "SunPageDown")))
-(def-non-emacs-key *top-map* (kbd "s-v") (stumpwm::send-meta-key (current-screen) (kbd "C-v")))
-(def-non-emacs-key *top-map* (kbd "C-b") (stumpwm::send-meta-key (current-screen) (kbd "Left")))
-(def-non-emacs-key *top-map* (kbd "C-f") (stumpwm::send-meta-key (current-screen) (kbd "Right")))
-(def-non-emacs-key *top-map* (kbd "s-f") (stumpwm::send-meta-key (current-screen) (kbd "C-f")))
-(def-non-emacs-key *top-map* (kbd "C-p") (stumpwm::send-meta-key (current-screen) (kbd "Up")))
-(def-non-emacs-key *top-map* (kbd "C-n") (stumpwm::send-meta-key (current-screen) (kbd "Down")))
-(def-non-emacs-key *top-map* (kbd "s-n") (stumpwm::send-meta-key (current-screen) (kbd "C-n")))
-(def-non-emacs-key *top-map* (kbd "C-d") (stumpwm::send-meta-key (current-screen) (kbd "Delete")))
-
-(def-non-emacs-key *top-map* (kbd "M-b") (stumpwm::send-meta-key (current-screen) (kbd "C-Left")))
-(def-non-emacs-key *top-map* (kbd "M-f") (stumpwm::send-meta-key (current-screen) (kbd "C-Right")))
-
-(def-non-emacs-key *top-map* (kbd "s-`") (get-shell-command "copyq toggle"))  ; TODO: This should work
-
-(defvar *copy-bindings*
-  (let ((m (make-sparse-keymap)))
-    (define-key m (kbd "u") "url-copy")
-    (define-key m (kbd "q") "in-quotes-copy")
-    (define-key m (kbd "C-M-c") "normal-copy")
-    m))
-
-(define-key *top-map* (kbd "C-M-c") *copy-bindings*)
-
-(defvar *eval-bindings*
-  (let ((m (stumpwm:make-sparse-keymap)))
-    (def-non-emacs-key m (kbd "C-r") (eval-line (get-x-selection))) ; TODO: have this use the command defined earlier
-    m))
-
-(stumpwm:define-key stumpwm:*root-map* (stumpwm:kbd "C-c") '*eval-bindings*)
 
 (def-non-emacs-key *top-map* (kbd "s-t") (stumpwm::send-meta-key (current-screen) (kbd "C-t")))
 
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
 (define-key *top-map* (kbd "s-SPC") (get-shell-command "synapse"))
 (define-key *root-map* (kbd "C-b") (get-shell-command "chromium"))
-(define-key *root-map* (kbd "C-m") "echo-last-messages")
-(define-key *root-map* (kbd "M") "select-last-messages")
 
-;; (defun key-press-hook (key key-seq cmd)
-;;   (declare (ignore key))
-;;   (unless (eq *top-map* *resize-map*)
-;;     (let ((*message-window-gravity* :bottom-right)
-;;           (maps (get-keymaps-at-key-seq (dereference-kmaps (top-maps))
-;;                                         (reverse key-seq))))
-;;       (if (remove-if-not 'kmap-p maps)
-;;           (apply 'display-bindings-for-keymaps (reverse (cdr key-seq)) maps)
-;;           (message "Key sequence: ~a" (print-key-seq (reverse key-seq)))))))
-
-;; (defmacro replace-hook (hook fn)
-;;   `(remove-hook ,hook ,fn)
-;;   `(add-hook ,hook ,fn))
-
-;; (replace-hook *key-press-hook* 'key-press-hook)
-
-;; prompt the user for an interactive command. The first arg is an
-;; optional initial contents.
-(defcommand colon1 (&optional (initial "")) (:rest)
-  (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
-    (when cmd
-      (eval-command cmd t))))
-
-(defun shell-command (command) "Run a shell command and display output to screen.
-    This must be used in a functional side-effects-free style! If a program does not
-    exit of its own accord, Stumpwm might hang!"
-       (check-type command string)
-       (echo-string (current-screen) (run-shell-command command t)))
-
-(define-stumpwm-command "shell-command" ((command :string "sh: " :string))
-  (check-type command string)
-  (shell-command command))
-
-(defun cat (&rest strings) "Concatenates strings, like the Unix command 'cat'.
-    A shortcut for (concatenate 'string foo bar)."
-       (apply 'concatenate 'string strings))
 
 (defcommand swank () ()
   (swank:create-server :port 4005
