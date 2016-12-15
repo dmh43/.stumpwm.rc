@@ -1,7 +1,10 @@
 *
-
+debug-output.txt
+modules
 .env*
 .dir-locals.el
 
 !.stumpwmrc
+!.stumpwmrc/*
+!.stumpwm.d/config/
 !.gitignore
