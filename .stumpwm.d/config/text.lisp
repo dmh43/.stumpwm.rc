@@ -14,8 +14,8 @@
 (def-non-emacs-key *top-map* (kbd "M-b") (stumpwm::send-meta-key (current-screen) (kbd "C-Left")))
 (def-non-emacs-key *top-map* (kbd "M-f") (stumpwm::send-meta-key (current-screen) (kbd "C-Right")))
 
-(def-non-emacs-key *top-map* (kbd "M-DEL") (kill-previous-word))
-(def-non-emacs-key *top-map* (kbd "M-DEL") (kill-next-word))
+(def-non-emacs-key *top-map* (kbd "M-BackSpace") (kill-previous-word))
+(def-non-emacs-key *top-map* (kbd "M-d") (kill-next-word))
 
 (defvar *copy-bindings*
   (let ((m (make-sparse-keymap)))
@@ -25,3 +25,21 @@
     m))
 
 (define-key *top-map* (kbd "C-M-c") *copy-bindings*)
+
+
+(defvar *kill-bindings*
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "s") "kill-to-surrounds")
+    (define-key m (kbd "f") "kill-to right")
+    (define-key m (kbd "b") "kill-to left")
+    m))
+
+(define-key *top-map* (kbd "C-M-d") *kill-bindings*)
+
+(defvar *zap-bindings*
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "z") "get-chars-to right")
+    (define-key m (kbd "b") "get-chars-to left")
+    m))
+
+(define-key *root-map* (kbd "z") '*zap-bindings*)

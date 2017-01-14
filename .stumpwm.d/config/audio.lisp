@@ -37,4 +37,4 @@
 (define-key *top-map* (kbd "M-XF86AudioRaiseVolume") "amixer-Headphone-5%+")
 (define-key *top-map* (kbd "M-XF86AudioMute")        "amixer-Headphone-toggle")
 
-(define-key *top-map* (kbd "XF86AudioMicMute")        "amixer-sense-toggle")
+;; (define-key *top-map* (kbd "XF86AudioMicMute")        "amixer-sense-toggle")

@@ -4,3 +4,4 @@
 
 (define-key *top-map* (kbd "M-]") "gnext")
 (define-key *top-map* (kbd "M-[") "gprev")
+(setq *mouse-focus-policy* :click)
