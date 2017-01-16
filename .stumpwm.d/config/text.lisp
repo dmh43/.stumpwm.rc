@@ -17,6 +17,8 @@
 (def-non-emacs-key *top-map* (kbd "M-BackSpace") (kill-previous-word))
 (def-non-emacs-key *top-map* (kbd "M-d") (kill-next-word))
 
+(define-key *top-map* (kbd "s-s") "send-keys")
+
 (defvar *copy-bindings*
   (let ((m (make-sparse-keymap)))
     (define-key m (kbd "u") "url-copy")
