@@ -23,10 +23,10 @@
   (let ((m (make-sparse-keymap)))
     (define-key m (kbd "u") "url-copy")
     (define-key m (kbd "q") "in-quotes-copy")
-    (define-key m (kbd "C-M-c") "normal-copy")
+    (define-key m (kbd "s-c") "normal-copy")
     m))
 
-(define-key *top-map* (kbd "C-M-c") *copy-bindings*)
+(define-key *top-map* (kbd "s-c") *copy-bindings*)
 
 
 (defvar *kill-bindings*
@@ -36,7 +36,7 @@
     (define-key m (kbd "b") "kill-to left")
     m))
 
-(define-key *top-map* (kbd "C-M-d") *kill-bindings*)
+(define-key *top-map* (kbd "s-d") *kill-bindings*)
 
 (defvar *zap-bindings*
   (let ((m (make-sparse-keymap)))
