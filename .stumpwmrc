@@ -11,6 +11,7 @@
 (load "~/stumplib/browser-helper.lisp")
 (load "~/stumplib/signal.lisp")
 
+(load "~/.stumpwm.d/config/window.lisp")
 (load "~/.stumpwm.d/config/audio.lisp")
 (load "~/.stumpwm.d/config/group.lisp")
 (load "~/.stumpwm.d/config/util.lisp")

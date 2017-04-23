@@ -14,6 +14,8 @@
 (def-non-emacs-key *top-map* (kbd "C-e") (stumpwm::send-meta-key (current-screen) (kbd "End")))
 (def-non-emacs-key *top-map* (kbd "s-a") (stumpwm::send-meta-key (current-screen) (kbd "C-a")))
 (def-non-emacs-key *top-map* (kbd "C-m") (stumpwm::send-meta-key (current-screen) (kbd "RET")))
+(def-non-emacs-key *top-map* (kbd "C-h") (stumpwm::send-meta-key (current-screen) (kbd "DEL")))
+(def-non-emacs-key *top-map* (kbd "M-h") (stumpwm::send-meta-key (current-screen) (kbd "C-DEL")))
 
 (def-non-emacs-key *top-map* (kbd "M-b") (stumpwm::send-meta-key (current-screen) (kbd "C-Left")))
 (def-non-emacs-key *top-map* (kbd "M-f") (stumpwm::send-meta-key (current-screen) (kbd "C-Right")))
