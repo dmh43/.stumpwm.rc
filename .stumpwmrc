@@ -2,7 +2,11 @@
 ;;
 
 (in-package :stumpwm)
-(load "~/.emacs.d/elpa/slime-20161109.640/swank-loader.lisp")
+;;(push #p"/home/dany/slime/" asdf:*central-registry*)
+;;(load "~/slime/swank.lisp")
+;;(require :swank)
+;;(swank-loader:init)
+(load "~/slime/swank-loader.lisp")
 (swank-loader:init)
 (load "~/stumplib/stumplib.lisp")
 (load "~/stumplib/copy-helper.lisp")
