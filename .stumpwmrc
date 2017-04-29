@@ -14,6 +14,7 @@
 (load "~/stumplib/eval-helper.lisp")
 (load "~/stumplib/browser-helper.lisp")
 (load "~/stumplib/signal.lisp")
+(load "~/stumplib/launcher.lisp")
 
 (load "~/.stumpwm.d/config/window.lisp")
 (load "~/.stumpwm.d/config/audio.lisp")
@@ -36,7 +37,7 @@
 (def-non-emacs-key *top-map* (kbd "s-t") (stumpwm::send-meta-key (current-screen) (kbd "C-t")))
 
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
-(define-key *top-map* (kbd "s-SPC") (get-shell-command "synapse"))
+(define-key *top-map* (kbd "s-SPC") "launcher")
 (define-key *root-map* (kbd "C-b") (get-shell-command "chromium"))
 
 
