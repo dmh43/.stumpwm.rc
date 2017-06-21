@@ -28,8 +28,6 @@
 
 (setq *window-format* "%m%n%s%c - %10t")
 
-(toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
-
 (run-shell-command "copyq")
 (run-shell-command "xinput --set-prop --type=float \"SynPS/2 Synaptics TouchPad\" \"Synaptics Coasting Speed\" 0 0")
 (which-key-mode)
