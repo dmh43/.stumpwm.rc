@@ -9,7 +9,7 @@
                (concat "amixer sset " ,channel " " (or ,amount "toggle") "| grep '^[ ]*Front'") t)))))
 
 (defvar amixer-channels '("Master" "Headphone"))
-(defvar amixer-options '("5%+" "5%-"))
+(defvar amixer-options '("5%+" "5%-" "toggle"))
 
 (let ((channels amixer-channels))
   (loop while channels do
