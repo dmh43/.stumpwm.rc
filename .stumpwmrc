@@ -15,6 +15,7 @@
 (load "~/stumplib/browser-helper.lisp")
 (load "~/stumplib/signal.lisp")
 (load "~/stumplib/launcher.lisp")
+(load "~/stumplib/keyboard-layout.lisp")
 
 (load "~/.stumpwm.d/config/window.lisp")
 (load "~/.stumpwm.d/config/audio.lisp")
@@ -36,6 +37,7 @@
 
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
 (define-key *top-map* (kbd "s-SPC") "launcher")
+(define-key *top-map* (kbd "Scroll_Lock") "layout-switcher")
 (define-key *root-map* (kbd "C-b") (get-shell-command "chromium"))
 
 
