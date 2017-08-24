@@ -25,6 +25,12 @@
 
 (define-key *top-map* (kbd "s-s") "send-keys")
 
+(define-key *menu-map* (kbd "C-h") 'menu-backspace)
+(define-key *menu-map* (kbd "C-m") 'menu-finish)
+
+(define-key *input-map* (kbd "C-h") 'input-delete-backward-char)
+(define-key *input-map* (kbd "C-m") 'input-submit)
+
 (defvar *copy-bindings*
   (let ((m (make-sparse-keymap)))
     (define-key m (kbd "u") "url-copy")

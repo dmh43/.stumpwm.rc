@@ -36,9 +36,11 @@
 (def-non-emacs-key *top-map* (kbd "s-t") (stumpwm::send-meta-key (current-screen) (kbd "C-t")))
 
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
+(define-key *root-map* (kbd "z") (get-shell-command "zath"))
+(define-key *root-map* (kbd "p") "papiers")
 (define-key *top-map* (kbd "s-SPC") "launcher")
 (define-key *top-map* (kbd "Scroll_Lock") "layout-switcher")
-(define-key *root-map* (kbd "C-b") (get-shell-command "chromium"))
+(define-key *root-map* (kbd "C-b") "chrome")
 
 
 (defun swank (port)
