@@ -18,6 +18,7 @@
 (load "~/stumplib/papiers.lisp")
 (load "~/stumplib/display-helpers.lisp")
 (load "~/stumplib/keyboard-layout.lisp")
+(load "~/stumplib/window.lisp")
 
 (load "~/.stumpwm.d/config/window.lisp")
 (load "~/.stumpwm.d/config/audio.lisp")
@@ -26,6 +27,7 @@
 (load "~/.stumpwm.d/config/text.lisp")
 (load "~/.stumpwm.d/config/eval.lisp")
 (load "~/.stumpwm.d/config/debug.lisp")
+(load "~/.stumpwm.d/config/display.lisp")
 
 (setf *max-last-message-size* 10000)
 
@@ -37,13 +39,16 @@
 
 (def-non-emacs-key *top-map* (kbd "s-t") (stumpwm::send-meta-key (current-screen) (kbd "C-t")))
 
+(defcommand get-time () ()
+  (message (run-shell-command "timedatectl | head -n 1 | awk '{$1=$1};1' | tr -d '\\n'" t)))
+
 (define-key *root-map* (kbd "c") (get-shell-command "terminator"))
 (define-key *root-map* (kbd "z") (get-shell-command "zath"))
-(define-key *root-map* (kbd "p") "papiers")
+(define-key *root-map* (kbd "P") "papiers")
 (define-key *top-map* (kbd "s-SPC") "launcher")
 (define-key *top-map* (kbd "Scroll_Lock") "layout-switcher")
 (define-key *root-map* (kbd "C-b") "chrome")
-(define-key *root-map* (kbd "d") "toggle-display")
+(define-key *root-map* (kbd "a") "get-time")
 
 (defun swank (port)
   (handler-case (progn
