@@ -47,7 +47,7 @@
 (define-key *root-map* (kbd "P") "papiers")
 (define-key *top-map* (kbd "s-SPC") "launcher")
 (define-key *top-map* (kbd "Scroll_Lock") "layout-switcher")
-(define-key *root-map* (kbd "C-b") "chrome")
+(define-key *root-map* (kbd "C-b") "firefox")
 (define-key *root-map* (kbd "a") "get-time")
 
 (defun swank (port)

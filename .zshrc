@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/home/dany/.oh-my-zsh
-export PATH="/home/dany/.gittown/src:/home/dany/.cask/bin:/home/dany/bin:/home/dany/.local/bin:$PATH"
+export PATH="/home/dany/.gittown/src:/home/dany/.cask/bin:/home/dany/bin:/home/dany/.local/bin:/home/dany/bin/firefox:$PATH"
 export MANPATH="/home/dany/.gittown/man:$MANPATH"
 
 # Set name of the theme to load.
@@ -98,7 +98,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 export ALTERNATE_EDITOR=""
 
-source .aws_cred
-
 # OPAM configuration
 . /home/dany/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/dany/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/home/dany/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/dany/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/dany/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
